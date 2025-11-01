@@ -478,7 +478,6 @@ MIT License - See [LICENSE](LICENSE) for details.
 **Built with:**
 - [Claude Code](https://claude.ai/code) - AI coding assistant
 - [GitHub CLI](https://cli.github.com/) - GitHub on the command line
-- [RAPID-AI Framework](https://github.com/macjunkins/.claude-config) - Structured AI agent workflows
 
 ---
 
