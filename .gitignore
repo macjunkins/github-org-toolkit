@@ -1,0 +1,72 @@
+# Configuration files (contain org-specific data)
+config/config.yaml
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+
+# Cache
+/tmp/
+.cache/
+*.cache
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+*.log
+logs/
+
+# Output files
+*.csv
+*.json
+!config/labels.json
+!config/*.example.*
+*.html
+!docs/**/*.html
+*.svg
+!docs/**/*.svg
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Secrets
+.env
+*.key
+*.pem
+credentials.json
+secrets.yaml
