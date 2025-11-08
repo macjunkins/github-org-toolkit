@@ -4,7 +4,7 @@
 
 Combining Claude Code slash commands, automation scripts, and the GitHub CLI for a comprehensive organization management solution.
 
-📊 **[View Project Board](https://github.com/users/macjunkins/projects/18)** | 📋 **[View Milestones](https://github.com/macjunkins/github-org-toolkit/milestones)** | 📖 **[Read Roadmap](Roadmap.md)** | 🐛 **[Report Issues](https://github.com/macjunkins/github-org-toolkit/issues)**
+📊 **[View Project Board](https://github.com/users/macjunkins/projects/18)** | 📋 **[View Milestones](https://github.com/macjunkins/github-org-toolkit/milestones)** | 📖 **[Product Roadmap](docs/planning/product-roadmap.md)** | 🐛 **[Report Issues](https://github.com/macjunkins/github-org-toolkit/issues)**
 
 ---
 
@@ -250,27 +250,7 @@ weekly_report_day: "Monday"
 
 ---
 
-### Example 3: Find Blocking Issues
-
-```bash
-/find-blocking-issues
-
-# Output:
-## Blocking Issues Analysis
-
-### Critical Path (3 issues)
-1. #23: Audit personal repos 🚨 **BLOCKS 5 issues**
-   - Status: In Progress (no updates in 2 days)
-   - Recommendation: **URGENT - Top priority**
-
-2. #8: Validate TIER 1 archival **BLOCKS 8 issues**
-   - Status: Waiting on #7 to complete
-   - Recommendation: Prepare validation environment now
-```
-
----
-
-### Example 4: Generate Weekly Report
+### Example 3: Generate Weekly Report
 
 ```bash
 # Manual run
@@ -284,9 +264,9 @@ weekly_report_day: "Monday"
 
 ## Advanced Usage
 
-### Caching Strategy
+### Performance & Caching
 
-Avoid GitHub API rate limits by caching query results:
+Avoid GitHub API rate limits with cached GraphQL queries:
 
 ```bash
 # Cache location: /tmp/github-cache/
@@ -296,137 +276,54 @@ Avoid GitHub API rate limits by caching query results:
 cache_ttl: 600  # 10 minutes for slower-moving data
 ```
 
-### GraphQL Queries
+Reusable GraphQL queries in `.claude/github-queries/`:
 
-Reusable queries stored in `.claude/github-queries/`:
-
-```graphql
-# triage-issues.graphql
-query TriageIssues($org: String!) {
-  organization(login: $org) {
-    repositories(first: 100) {
-      nodes {
-        name
-        issues(first: 100, labels: ["triage"], states: OPEN) {
-          nodes {
-            number
-            title
-            body
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-Use with `gh api`:
 ```bash
+# Use with gh api:
 gh api graphql -f query="$(cat .claude/github-queries/triage-issues.graphql)" \
   -F org="YourOrgName"
 ```
 
----
-
-## Integration with RAPID-AI Framework
-
-If you use the **Rapid AI Tool Coming Soon**
-
-```markdown
-# .claude/commands/org-automation/triage-summary.md
-
-Use the Task tool to invoke the Explore agent with thoroughness level "medium".
-
-Task: Find all issues with the 'triage' label across the organization.
-Group results by milestone and output a markdown summary table.
-```
+See `.claude/github-queries/` for available templates (triage, milestones, project status).
 
 ---
 
 ## Contributing
 
-Contributions welcome! This toolkit is designed to be:
-- **Generic** enough to work for any organization
-- **Specific** enough to solve real problems
-- **Extensible** via custom commands and scripts
+Contributions welcome! This toolkit is designed to be generic, practical, and extensible.
 
-### 🚀 Want to Contribute?
-
+**How to contribute:**
 1. Check the [project board](https://github.com/users/macjunkins/projects/18) for open issues
-2. Look for issues labeled [`help wanted`](https://github.com/macjunkins/github-org-toolkit/labels/help%20wanted) or [`good first issue`](https://github.com/macjunkins/github-org-toolkit/labels/good%20first%20issue)
-3. Comment on an issue to claim it
-4. Follow the workflow in [CONTRIBUTING.md](CONTRIBUTING.md)
+2. Look for [`help wanted`](https://github.com/macjunkins/github-org-toolkit/labels/help%20wanted) or [`good first issue`](https://github.com/macjunkins/github-org-toolkit/labels/good%20first%20issue) labels
+3. Comment to claim an issue, then follow [CONTRIBUTING.md](CONTRIBUTING.md)
 
-**Current Focus:** [Phase 2: Org Automation](https://github.com/macjunkins/github-org-toolkit/milestone/1) - 10 open issues
-
-**Full guidelines:** [CONTRIBUTING.md](CONTRIBUTING.md) | **Product Roadmap:** [Roadmap](Roadmap.md)
+**Current focus:** [Phase 2: Org Automation](https://github.com/macjunkins/github-org-toolkit/milestone/1) - 10 open issues
 
 ---
 
 ## Roadmap
 
-**📊 [View Full Roadmap on Project Board](https://github.com/users/macjunkins/projects/18)** | **📋 [View All Milestones](https://github.com/macjunkins/github-org-toolkit/milestones)**
+**📊 [View Project Board](https://github.com/users/macjunkins/projects/18)** | **📋 [View Milestones](https://github.com/macjunkins/github-org-toolkit/milestones)** | **📖 [Full Product Roadmap](docs/planning/product-roadmap.md)**
 
-### Phase 1: Essential Commands ✅ (Complete)
-**Status:** Released
-**Milestone:** v1.0-phase-1-essentials
+### Phase 1: Essential Commands ✅ Complete
+- 9 generic GitHub workflow commands (`/gh-work`, `/gh-finish`, `/create-issue`, etc.)
+- Project directory structure and planning documentation
 
-- [x] Generic GitHub workflow commands (`/gh-work`, `/gh-finish`, etc.)
-- [x] Project directory structure
-- [x] Planning documentation and PRD
+### Phase 2: Org Automation 🚧 In Progress (Dec 2025)
+- **Commands:** `/triage-summary`, `/project-status`, `/milestone-summary`, `/archival-status`
+- **Scripts:** Repo ownership audit, batch archival, label sync
+- **Infrastructure:** Configuration system, documentation, GraphQL query library
+- **[View Milestone](https://github.com/macjunkins/github-org-toolkit/milestone/1)** - 10 open issues
 
----
+### Phase 3: Advanced Analysis 📅 Planned (Q1 2026)
+- Blocking issue detection, dependency graphs, discussion summaries
+- Weekly reports, build validation, metrics dashboard
+- **[View Milestone](https://github.com/macjunkins/github-org-toolkit/milestone/2)** - 6 planned issues
 
-### Phase 2: Org Automation 🚧 (In Progress)
-**Status:** Active Development
-**Milestone:** [v1.1-phase-2-org-automation](https://github.com/macjunkins/github-org-toolkit/milestone/1) (10 open issues)
-**Target:** Dec 31, 2025
-
-**Slash Commands:**
-- [ ] `/triage-summary` - Show all issues needing decisions ([#1](https://github.com/macjunkins/github-org-toolkit/issues/1))
-- [ ] `/project-status` - Summarize project board state ([#2](https://github.com/macjunkins/github-org-toolkit/issues/2))
-- [ ] `/milestone-summary` - Progress report for milestones ([#3](https://github.com/macjunkins/github-org-toolkit/issues/3))
-- [ ] `/archival-status` - Track archival progress ([#4](https://github.com/macjunkins/github-org-toolkit/issues/4))
-
-**Automation Scripts:**
-- [ ] `repo-ownership-audit.py` - Identify non-org repos ([#5](https://github.com/macjunkins/github-org-toolkit/issues/5))
-- [ ] `archive-repos-batch.sh` - Batch archive repos ([#6](https://github.com/macjunkins/github-org-toolkit/issues/6))
-- [ ] `sync-labels.sh` - Consistent labels across repos ([#7](https://github.com/macjunkins/github-org-toolkit/issues/7))
-
-**Infrastructure:**
-- [ ] Configuration system ([#8](https://github.com/macjunkins/github-org-toolkit/issues/8))
-- [ ] Documentation ([#9](https://github.com/macjunkins/github-org-toolkit/issues/9))
-- [ ] GraphQL query library ([#10](https://github.com/macjunkins/github-org-toolkit/issues/10))
-
----
-
-### Phase 3: Advanced Analysis 📅 (Planned)
-**Milestone:** [v1.2-phase-3-analysis](https://github.com/macjunkins/github-org-toolkit/milestone/2) (6 planned issues)
-**Target:** Mar 31, 2026
-
-- `/find-blocking-issues` - Identify critical path issues
-- `/discussion-summary` - AI-powered discussion summaries
-- `/weekly-report` - Auto-generate weekly summaries
-- `dependency-graph.py` - Visualize issue dependencies
-- `build-validation.sh` - Automated build validation
-- `metrics-dashboard.py` - Org-wide metrics dashboard
-
----
-
-### Phase 4: Scheduled Automation 📅 (Planned)
-**Milestone:** [v1.3-phase-4-scheduled](https://github.com/macjunkins/github-org-toolkit/milestone/3) (6 planned issues)
-**Target:** Jun 30, 2026
-
-- `stale-cleanup.sh` - Automated stale issue cleanup (cron)
-- `weekly-report-generator.py` - Scheduled weekly reports (cron)
-- `sync-labels-cron.sh` - Scheduled label sync (cron)
-- `metrics-collector-cron.py` - Continuous metrics collection (cron)
-- CI/CD workflows - GitHub Actions integration
-- Cron setup documentation
-
----
-
-**See the full roadmap:** [Roadmap](Roadmap.md) | [Project Board](https://github.com/users/macjunkins/projects/18)
+### Phase 4: Scheduled Automation 📅 Planned (Q2 2026)
+- Automated stale cleanup, scheduled reports, continuous metrics
+- CI/CD integration with GitHub Actions
+- **[View Milestone](https://github.com/macjunkins/github-org-toolkit/milestone/3)** - 6 planned issues
 
 ---
 
