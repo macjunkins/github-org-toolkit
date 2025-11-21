@@ -52,6 +52,8 @@ logs/
 # Output files
 *.csv
 *.json
+!package.json
+!tsconfig.json
 !config/labels.json
 !config/*.example.*
 *.html
@@ -70,3 +72,6 @@ logs/
 *.pem
 credentials.json
 secrets.yaml
+
+# Node
+node_modules/

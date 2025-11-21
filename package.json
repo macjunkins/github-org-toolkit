@@ -1,0 +1,39 @@
+{
+  "name": "github-org-toolkit",
+  "version": "0.1.0",
+  "description": "A powerful, AI-augmented toolkit for managing GitHub organizations efficiently.",
+  "main": "dist/index.js",
+  "bin": {
+    "github-org-toolkit": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "keywords": [
+    "github",
+    "organization",
+    "toolkit",
+    "automation",
+    "cli"
+  ],
+  "author": "John Junkins",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^12.0.0",
+    "dotenv": "^16.4.5",
+    "octokit": "^3.1.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
