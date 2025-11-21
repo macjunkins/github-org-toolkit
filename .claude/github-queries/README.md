@@ -204,25 +204,26 @@ Handle pagination for large result sets:
 ```bash
 #!/bin/bash
 ORG="YourOrgName"
-CURSOR=""
 
-while true; do
-  if [ -z "$CURSOR" ]; then
-    RESULT=$(gh api graphql -f query="$(cat .claude/github-queries/repo-list.graphql)" -F org="$ORG")
-  else
-    # Note: You'll need to modify the query to accept an 'after' cursor parameter
-    RESULT=$(gh api graphql -f query="$(cat .claude/github-queries/repo-list.graphql)" -F org="$ORG" -F after="$CURSOR")
-  fi
-  
-  echo "$RESULT" | jq '.data.organization.repositories.nodes[]'
-  
-  HAS_NEXT=$(echo "$RESULT" | jq -r '.data.organization.repositories.pageInfo.hasNextPage')
-  if [ "$HAS_NEXT" = "false" ]; then
-    break
-  fi
-  
+# Note: The current queries use the 'first' parameter to limit results.
+# For pagination beyond the initial fetch, you would need to:
+# 1. Modify the query to accept an 'after' cursor parameter
+# 2. Add pagination logic as shown below
+
+# Example of what pagination would look like (requires query modification):
+CURSOR=""
+RESULT=$(gh api graphql -f query="$(cat .claude/github-queries/repo-list.graphql)" -F org="$ORG")
+
+# Extract results
+echo "$RESULT" | jq '.data.organization.repositories.nodes[]'
+
+# Check if more pages exist
+HAS_NEXT=$(echo "$RESULT" | jq -r '.data.organization.repositories.pageInfo.hasNextPage')
+if [ "$HAS_NEXT" = "true" ]; then
   CURSOR=$(echo "$RESULT" | jq -r '.data.organization.repositories.pageInfo.endCursor')
-done
+  echo "More results available. Next cursor: $CURSOR"
+  echo "To fetch next page, modify the query to accept 'after: \$cursor' parameter"
+fi
 ```
 
 ### Error Handling
@@ -255,8 +256,8 @@ gh api graphql -f query="$(cat .claude/github-queries/triage-issues.graphql)" \
   -F org="$(yq -r '.organization' config/config.yaml)" \
   | jq '.data.organization.repositories.nodes[] | 
         select(.issues.nodes | length > 0) |
-        .issues.nodes[] |
-        {repo: .repository.name, number, title, labels: [.labels.nodes[].name]}'
+        {repo: .name, issues: [.issues.nodes[] | 
+        {number, title, labels: [.labels.nodes[].name]}]}'
 ```
 
 ---
