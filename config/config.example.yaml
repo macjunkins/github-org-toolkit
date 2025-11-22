@@ -1,0 +1,103 @@
+# GitHub Organization Toolkit Configuration
+# Copy this file to config/config.yaml and customize for your organization
+# config/config.yaml is gitignored to protect your organization-specific settings
+
+# =============================================================================
+# ORGANIZATION SETTINGS
+# =============================================================================
+
+# Your GitHub organization name (required)
+# This is used by all commands and scripts to target the correct organization
+organization: "YourOrgName"
+
+# GitHub API base URL (optional, defaults to github.com)
+# For GitHub Enterprise, set this to your instance URL
+# github_api_url: "https://github.yourcompany.com/api/v3"
+
+# =============================================================================
+# CACHING SETTINGS
+# =============================================================================
+
+# Cache time-to-live in seconds (default: 300 = 5 minutes)
+# Adjust based on how frequently your organization data changes
+# Lower values = more API calls but fresher data
+# Higher values = fewer API calls but potentially stale data
+cache_ttl: 300
+
+# Cache directory (optional, defaults to /tmp/github-cache/)
+# cache_dir: "/tmp/github-cache/"
+
+# =============================================================================
+# LABEL MANAGEMENT
+# =============================================================================
+
+# Path to standard label definitions JSON file
+# Used by label sync scripts to ensure consistency across repos
+labels_source: "config/labels.json"
+
+# =============================================================================
+# REPOSITORY MANAGEMENT
+# =============================================================================
+
+# Path to tier 1 repository list (critical/active repos)
+# Used for batch operations and archival workflows
+# File should contain one repository name per line
+tier1_repos: "examples/your-org/tier1-repos.txt"
+
+# Path to tier 2 repository list (less critical repos)
+tier2_repos: "examples/your-org/tier2-repos.txt"
+
+# Path to tier 3 repository list (archived/deprecated repos)
+# tier3_repos: "examples/your-org/tier3-repos.txt"
+
+# =============================================================================
+# ISSUE & PR AUTOMATION
+# =============================================================================
+
+# Number of days before an issue is considered stale
+# Used by stale issue cleanup automation
+stale_issue_days: 60
+
+# Number of days before a PR is considered stale
+# stale_pr_days: 30
+
+# Labels to apply to stale issues (comma-separated)
+# stale_labels: "stale,needs-attention"
+
+# Labels that exempt issues from being marked stale
+# stale_exempt_labels: "pinned,security,dependencies"
+
+# =============================================================================
+# REPORTING & NOTIFICATIONS
+# =============================================================================
+
+# Day of week for weekly report generation (Monday-Sunday)
+# Used by automated weekly report scripts
+weekly_report_day: "Monday"
+
+# Hour of day to generate weekly report (0-23, 24-hour format)
+# weekly_report_hour: 9
+
+# GitHub discussion number for posting automated reports (optional)
+# If set, scripts will post reports to this discussion thread
+# weekly_report_discussion: 123
+
+# =============================================================================
+# CUSTOM WORKFLOWS
+# =============================================================================
+
+# Custom fields for organization-specific workflows
+# Add your own configuration options here as needed
+
+# Example: Milestone tracking
+# default_milestone: "v1.0"
+# milestone_auto_close: true
+
+# Example: Project board settings
+# default_project_board: 1
+# auto_assign_project: true
+
+# Example: Archival project settings
+# archival_target_repo_count: 24
+# archival_log_file: "ARCHIVAL_LOG.md"
+# archival_discussion: 456

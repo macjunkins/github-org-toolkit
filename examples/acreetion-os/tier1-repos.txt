@@ -1,0 +1,32 @@
+# Example tier 1 repositories for AcreetionOS organization
+# These are critical/active repositories that should be maintained
+
+# Core Arch Linux packages
+archlinux-keyring
+pacman
+pacman-mirrorlist
+
+# Core system components
+systemd-boot-config
+arch-install-scripts
+mkinitcpio
+
+# Package management
+pkgbuild-utils
+aur-helper
+
+# Documentation
+docs
+wiki
+
+# Toolkit and automation
+github-org-toolkit
+automation-scripts
+
+# Community
+community-guidelines
+CODE_OF_CONDUCT
+
+# Active projects
+project-alpha
+project-beta
