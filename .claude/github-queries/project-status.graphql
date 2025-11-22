@@ -1,0 +1,151 @@
+# Query: Project Status
+# Description: Get current state of a GitHub project board (Projects V2)
+#
+# Required Variables:
+#   - org: String! (Organization name)
+#   - projectNumber: Int! (Project number)
+#
+# Usage Example:
+#   gh api graphql -f query="$(cat .claude/github-queries/project-status.graphql)" \
+#     -F org="YourOrgName" \
+#     -F projectNumber=18
+#
+# Output: Project board state including:
+#   - Project title, description, and URL
+#   - Items (issues/PRs) with status, title, assignees
+#   - Field values (status, priority, etc.)
+#   - Created/updated timestamps
+
+query ProjectStatus($org: String!, $projectNumber: Int!) {
+  organization(login: $org) {
+    projectV2(number: $projectNumber) {
+      title
+      shortDescription
+      url
+      closed
+      createdAt
+      updatedAt
+      readme
+      items(first: 100) {
+        totalCount
+        nodes {
+          id
+          createdAt
+          updatedAt
+          fieldValues(first: 10) {
+            nodes {
+              ... on ProjectV2ItemFieldTextValue {
+                text
+                field {
+                  ... on ProjectV2FieldCommon {
+                    name
+                  }
+                }
+              }
+              ... on ProjectV2ItemFieldNumberValue {
+                number
+                field {
+                  ... on ProjectV2FieldCommon {
+                    name
+                  }
+                }
+              }
+              ... on ProjectV2ItemFieldSingleSelectValue {
+                name
+                field {
+                  ... on ProjectV2FieldCommon {
+                    name
+                  }
+                }
+              }
+              ... on ProjectV2ItemFieldDateValue {
+                date
+                field {
+                  ... on ProjectV2FieldCommon {
+                    name
+                  }
+                }
+              }
+            }
+          }
+          content {
+            ... on Issue {
+              number
+              title
+              state
+              url
+              createdAt
+              updatedAt
+              closedAt
+              repository {
+                name
+              }
+              labels(first: 10) {
+                nodes {
+                  name
+                  color
+                }
+              }
+              assignees(first: 5) {
+                nodes {
+                  login
+                }
+              }
+              author {
+                login
+              }
+            }
+            ... on PullRequest {
+              number
+              title
+              state
+              url
+              createdAt
+              updatedAt
+              closedAt
+              mergedAt
+              repository {
+                name
+              }
+              labels(first: 10) {
+                nodes {
+                  name
+                  color
+                }
+              }
+              assignees(first: 5) {
+                nodes {
+                  login
+                }
+              }
+              author {
+                login
+              }
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+      fields(first: 20) {
+        nodes {
+          ... on ProjectV2Field {
+            id
+            name
+            dataType
+          }
+          ... on ProjectV2SingleSelectField {
+            id
+            name
+            options {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}

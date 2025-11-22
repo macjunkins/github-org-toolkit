@@ -1,0 +1,67 @@
+# Query: Milestone Progress
+# Description: Track progress of a specific milestone across repositories
+#
+# Required Variables:
+#   - org: String! (Organization name)
+#   - milestoneTitle: String! (Milestone title to search for)
+#   - first: Int (Number of repositories to fetch, default: 50)
+#
+# Usage Example:
+#   gh api graphql -f query="$(cat .claude/github-queries/milestone-progress.graphql)" \
+#     -F org="YourOrgName" \
+#     -F milestoneTitle="v1.1-phase-2-org-automation" \
+#     -F first=50
+#
+# Output: Milestone progress including:
+#   - Total issues, open issues, closed issues
+#   - Issue details (number, title, state, labels)
+#   - Due date and milestone description
+#   - Repository name
+
+query MilestoneProgress($org: String!, $milestoneTitle: String!, $first: Int = 50) {
+  organization(login: $org) {
+    repositories(first: $first, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        name
+        milestones(first: 10, query: $milestoneTitle, states: OPEN) {
+          nodes {
+            title
+            number
+            description
+            dueOn
+            state
+            createdAt
+            updatedAt
+            closedAt
+            url
+            issues(first: 100, orderBy: {field: CREATED_AT, direction: ASC}) {
+              totalCount
+              nodes {
+                number
+                title
+                state
+                createdAt
+                updatedAt
+                closedAt
+                url
+                labels(first: 10) {
+                  nodes {
+                    name
+                    color
+                  }
+                }
+                author {
+                  login
+                }
+              }
+            }
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}

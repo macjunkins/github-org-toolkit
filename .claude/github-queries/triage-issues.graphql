@@ -1,0 +1,61 @@
+# Query: Triage Issues
+# Description: Fetch all issues labeled with 'triage' across an organization
+# 
+# Required Variables:
+#   - org: String! (Organization name)
+#   - first: Int (Number of repositories to fetch, default: 50)
+#   - issueFirst: Int (Number of issues per repo, default: 20)
+#
+# Usage Example:
+#   gh api graphql -f query="$(cat .claude/github-queries/triage-issues.graphql)" \
+#     -F org="YourOrgName" \
+#     -F first=50 \
+#     -F issueFirst=20
+#
+# Output: All issues with 'triage' label, including:
+#   - Issue number, title, body, state
+#   - Labels, milestone, created/updated dates
+#   - Repository name
+#   - Author information
+
+query TriageIssues($org: String!, $first: Int = 50, $issueFirst: Int = 20) {
+  organization(login: $org) {
+    repositories(first: $first, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        name
+        issues(first: $issueFirst, labels: ["triage"], states: OPEN, orderBy: {field: UPDATED_AT, direction: DESC}) {
+          nodes {
+            number
+            title
+            body
+            state
+            createdAt
+            updatedAt
+            url
+            labels(first: 10) {
+              nodes {
+                name
+                color
+              }
+            }
+            milestone {
+              title
+              number
+              dueOn
+            }
+            author {
+              login
+            }
+            comments {
+              totalCount
+            }
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}

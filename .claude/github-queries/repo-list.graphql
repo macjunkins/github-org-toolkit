@@ -1,0 +1,79 @@
+# Query: Repository List
+# Description: Fetch all repositories in an organization with metadata
+#
+# Required Variables:
+#   - org: String! (Organization name)
+#   - first: Int (Number of repositories to fetch, default: 100)
+#
+# Usage Example:
+#   gh api graphql -f query="$(cat .claude/github-queries/repo-list.graphql)" \
+#     -F org="YourOrgName" \
+#     -F first=100
+#
+# Output: Repository list including:
+#   - Name, description, visibility (public/private)
+#   - Archive status, fork status, template status
+#   - Primary language, star/fork/watcher counts
+#   - Created/updated/pushed timestamps
+#   - Open issues and PR counts
+#   - Default branch and topics
+
+query RepoList($org: String!, $first: Int = 100) {
+  organization(login: $org) {
+    repositories(first: $first, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      totalCount
+      nodes {
+        name
+        nameWithOwner
+        description
+        url
+        visibility
+        isArchived
+        isFork
+        isTemplate
+        isPrivate
+        isLocked
+        primaryLanguage {
+          name
+          color
+        }
+        createdAt
+        updatedAt
+        pushedAt
+        stargazerCount
+        forkCount
+        watchers {
+          totalCount
+        }
+        defaultBranchRef {
+          name
+        }
+        repositoryTopics(first: 10) {
+          nodes {
+            topic {
+              name
+            }
+          }
+        }
+        issues(states: OPEN) {
+          totalCount
+        }
+        pullRequests(states: OPEN) {
+          totalCount
+        }
+        licenseInfo {
+          name
+          spdxId
+        }
+        diskUsage
+        owner {
+          login
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
