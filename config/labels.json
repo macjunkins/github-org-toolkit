@@ -1,0 +1,119 @@
+{
+  "labels": [
+    {
+      "name": "bug",
+      "color": "d73a4a",
+      "description": "Something isn't working"
+    },
+    {
+      "name": "documentation",
+      "color": "0075ca",
+      "description": "Improvements or additions to documentation"
+    },
+    {
+      "name": "duplicate",
+      "color": "cfd3d7",
+      "description": "This issue or pull request already exists"
+    },
+    {
+      "name": "enhancement",
+      "color": "a2eeef",
+      "description": "New feature or request"
+    },
+    {
+      "name": "good first issue",
+      "color": "7057ff",
+      "description": "Good for newcomers"
+    },
+    {
+      "name": "help wanted",
+      "color": "008672",
+      "description": "Extra attention is needed"
+    },
+    {
+      "name": "invalid",
+      "color": "e4e669",
+      "description": "This doesn't seem right"
+    },
+    {
+      "name": "question",
+      "color": "d876e3",
+      "description": "Further information is requested"
+    },
+    {
+      "name": "wontfix",
+      "color": "ffffff",
+      "description": "This will not be worked on"
+    },
+    {
+      "name": "triage",
+      "color": "fbca04",
+      "description": "Needs triage and decision making"
+    },
+    {
+      "name": "priority: critical",
+      "color": "b60205",
+      "description": "Critical priority - must be addressed immediately"
+    },
+    {
+      "name": "priority: high",
+      "color": "d93f0b",
+      "description": "High priority - should be addressed soon"
+    },
+    {
+      "name": "priority: medium",
+      "color": "fbca04",
+      "description": "Medium priority - normal timeline"
+    },
+    {
+      "name": "priority: low",
+      "color": "0e8a16",
+      "description": "Low priority - can wait"
+    },
+    {
+      "name": "status: blocked",
+      "color": "d73a4a",
+      "description": "Blocked by another issue or external dependency"
+    },
+    {
+      "name": "status: in progress",
+      "color": "1d76db",
+      "description": "Currently being worked on"
+    },
+    {
+      "name": "status: needs review",
+      "color": "fbca04",
+      "description": "Needs code review or decision review"
+    },
+    {
+      "name": "status: on hold",
+      "color": "d4c5f9",
+      "description": "Work paused, waiting for something"
+    },
+    {
+      "name": "type: breaking change",
+      "color": "b60205",
+      "description": "Introduces breaking API changes"
+    },
+    {
+      "name": "type: security",
+      "color": "b60205",
+      "description": "Security vulnerability or concern"
+    },
+    {
+      "name": "type: dependencies",
+      "color": "0366d6",
+      "description": "Pull requests that update a dependency file"
+    },
+    {
+      "name": "stale",
+      "color": "fef2c0",
+      "description": "No recent activity, may be closed if no response"
+    },
+    {
+      "name": "pinned",
+      "color": "d4c5f9",
+      "description": "This issue is pinned and will not be marked as stale"
+    }
+  ]
+}

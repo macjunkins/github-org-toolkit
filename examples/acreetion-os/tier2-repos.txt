@@ -1,0 +1,26 @@
+# Example tier 2 repositories for AcreetionOS organization
+# These are less critical but still maintained repositories
+
+# Legacy packages (maintained but lower priority)
+legacy-package-1
+legacy-package-2
+legacy-package-3
+
+# Experimental features
+experimental-feature-x
+experimental-feature-y
+
+# Tools and utilities
+utility-scripts
+helper-tools
+debug-tools
+
+# Templates and examples
+package-template
+example-configs
+starter-templates
+
+# Archive candidates (under review)
+old-project-1
+old-project-2
+deprecated-feature-1

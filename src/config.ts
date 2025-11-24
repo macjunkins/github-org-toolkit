@@ -10,16 +10,33 @@ const configSchema = z.object({
 
 export type Config = z.infer<typeof configSchema>;
 
-export const config = (() => {
-  const parsed = configSchema.safeParse(process.env);
+let _config: Config | null = null;
 
-  if (!parsed.success) {
-    console.error("❌ Invalid configuration:");
-    parsed.error.errors.forEach((err) => {
-      console.error(`  - ${err.path.join('.')}: ${err.message}`);
-    });
-    process.exit(1);
+/**
+ * Get environment-based configuration (lazy-loaded)
+ * This is used for GitHub API authentication
+ */
+export function getEnvConfig(): Config {
+  if (!_config) {
+    const parsed = configSchema.safeParse(process.env);
+
+    if (!parsed.success) {
+      console.error("❌ Invalid configuration:");
+      parsed.error.errors.forEach((err) => {
+        console.error(`  - ${err.path.join('.')}: ${err.message}`);
+      });
+      throw new Error('Configuration validation failed');
+    }
+
+    _config = parsed.data;
   }
 
-  return parsed.data;
-})();
+  return _config;
+}
+
+// For backward compatibility
+export const config = new Proxy({} as Config, {
+  get(target, prop) {
+    return getEnvConfig()[prop as keyof Config];
+  }
+});

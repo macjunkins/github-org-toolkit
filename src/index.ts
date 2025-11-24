@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import { verifyConnectionCommand } from './commands/verify';
+import { validateConfigCommand } from './commands/validateConfig';
 import chalk from 'chalk';
 
 const program = new Command();
@@ -11,6 +12,7 @@ program
   .version('0.1.0');
 
 program.addCommand(verifyConnectionCommand);
+program.addCommand(validateConfigCommand);
 
 program.parse(process.argv);
 

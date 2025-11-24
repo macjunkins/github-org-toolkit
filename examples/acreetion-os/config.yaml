@@ -1,0 +1,30 @@
+# AcreetionOS Organization Configuration Example
+# This is a real-world example for the AcreetionOS-Linux archival project
+# Copy to ../../config/config.yaml and customize
+
+organization: "AcreetionOS-Linux"
+
+# Cache settings (5 minutes is good for active development)
+cache_ttl: 300
+
+# Labels
+labels_source: "config/labels.json"
+
+# Repository tiers for archival project
+tier1_repos: "examples/acreetion-os/tier1-repos.txt"
+tier2_repos: "examples/acreetion-os/tier2-repos.txt"
+
+# Stale issue automation
+stale_issue_days: 60
+stale_labels: "stale,needs-attention"
+stale_exempt_labels: "pinned,security,dependencies,priority: critical,priority: high"
+
+# Weekly reporting
+weekly_report_day: "Monday"
+weekly_report_hour: 9
+
+# Archival project specific settings
+# Target: reduce from 99 repos to 20-24 repos
+archival_target_repo_count: 24
+archival_log_file: "ARCHIVAL_LOG.md"
+# archival_discussion: 123  # Set to your discussion number for automated updates
